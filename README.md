@@ -68,19 +68,19 @@ guarantees.
 
 ```
 ┌──────────────────────────────────────────────────────┐
-│                Docker Compose Stack                   │
-│                                                       │
+│                Docker Compose Stack                  │
+│                                                      │
 │  ┌─────────────────────┐   ┌───────────────────────┐ │
-│  │   vLLM Service       │   │   App Service          │ │
-│  │                      │   │                        │ │
-│  │  Cosmos Reason 2 8B  │◄──│  FastAPI Backend        │ │
-│  │  OpenAI-compat API   │   │  Streamlit Dashboard   │ │
-│  │  port 8000           │──►│  Analysis Pipeline     │ │
-│  │                      │   │                        │ │
+│  │   vLLM Service      │   │   App Service         │ │
+│  │                     │   │                       │ │
+│  │  Cosmos Reason 2 8B │◄──│  FastAPI Backend      | │ 
+│  │  OpenAI-compat API  │   │  Streamlit Dashboard  │ │
+│  │  port 8000          │──►│  Analysis Pipeline    │ │
+│  │                     │   │                       │ │
 │  └─────────────────────┘   └───────────────────────┘ │
-│         ▲                           ▲                 │
-│         │                           │                 │
-└─────────│───────────────────────────│─────────────────┘
+│         ▲                           ▲                │
+│         │                           │                │
+└─────────│───────────────────────────│────────────────┘
           │                           │
    Model weights             frames/ + telemetry.jsonl
    (volume mount)             (volume mounts)
