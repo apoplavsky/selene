@@ -1,0 +1,50 @@
+services:
+  vllm:
+    image: vllm/vllm-openai:latest
+    ports:
+      - "8000:8000"
+    volumes:
+      - ../Cosmos-Reason2-8B:/models/Cosmos-Reason2-8B:ro
+    command: >
+      --model /models/Cosmos-Reason2-8B
+      --max-model-len 8192
+      --reasoning-parser qwen3
+      --media-io-kwargs '{"video": {"num_frames": -1}}'
+      --port 8000
+      --trust-remote-code
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+    healthcheck:
+      test: ["CMD-SHELL", "curl -sf http://localhost:8000/health || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 20
+      start_period: 120s
+    restart: unless-stopped
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile.app
+    ports:
+      - "8080:8080"
+      - "8501:8501"
+    volumes:
+      - ./frames:/data/frames:ro
+      - ./telemetry.jsonl:/data/telemetry.jsonl:ro
+      - ./results:/data/results
+    environment:
+      - VLLM_BASE_URL=http://vllm:8000/v1
+      - COSMOS_MODEL=/models/Cosmos-Reason2-8B
+      - FRAMES_DIR=/data/frames
+      - TELEMETRY_PATH=/data/telemetry.jsonl
+      - RESULTS_DIR=/data/results
+    depends_on:
+      vllm:
+        condition: service_healthy
+    restart: unless-stopped
