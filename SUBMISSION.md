@@ -81,11 +81,11 @@ no connectivity.
 
 ## Demo Video
 
-[Link to demo video — REPLACE WITH YOUR URL]
+[selene_v1.mov on Google Drive](https://drive.google.com/file/d/1DlSiVPs91eT1mwWinxnS40X4QRNC7mHI/view?usp=share_link)
 
 ## Code Repository
 
-[Link to public GitHub repo — REPLACE WITH YOUR URL]
+[github.com/apoplavsky/selene](https://github.com/apoplavsky/selene)
 
 ## Tech Stack
 
